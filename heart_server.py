@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from db_patient import Patient
 app = Flask(__name__)
 
 @app.route("/api/new_patient", methods = ["POST"])
