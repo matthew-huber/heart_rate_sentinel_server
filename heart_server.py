@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from db_patient import Patient
 app = Flask(__name__)
 
+
 @app.route("/api/new_patient", methods = ["POST"])
 def new_patient():
     patient_data = request.get_json()
@@ -12,3 +13,8 @@ def new_patient():
     pat_to_add.save()
     
     return 0
+
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1")
+
