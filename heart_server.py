@@ -11,9 +11,9 @@ def new_patient():
     age = patient_data["user_age"]
     pat_to_add = Patient(patient_id = pat_id, attending_email = email, user_age = age)
     pat_to_add.save()
-    
-    return 0
+    return_val = {"status": "true"}
 
+    return jsonify(return_val)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1")
