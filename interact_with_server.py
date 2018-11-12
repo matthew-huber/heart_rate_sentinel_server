@@ -3,13 +3,18 @@ import json
 
 
 def main():
-    r = requests.post("http://127.0.0.1:5000/api/new_patient", json= {"patient_id" : 10, "attending_email" : "mth37@duke.edu", "user_age" : 50})
+    r = requests.post("http://127.0.0.1:5000/api/new_patient",
+                      json={"patient_id": 10,
+                            "attending_email": "mth37@duke.edu",
+                            "user_age": 50})
     post_result = r.json()
     print(post_result)
 
 
 def main2():
-    r = requests.post("http://127.0.0.1:5000/api/heart_rate", json= {"patient_id": 10, "heart_rate": 140})
+    r = requests.post("http://127.0.0.1:5000/api/heart_rate",
+                      json={"patient_id": 10,
+                            "heart_rate": 140})
     post_result = r.json()
     print(post_result)
 
