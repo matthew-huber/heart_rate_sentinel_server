@@ -18,5 +18,12 @@ def main2():
     post_result = r.json()
     print(post_result)
 
+
+def main3():
+    r = requests.get("http://127.0.0.1:5000/api/heart_rate/10")
+    result = r.json()
+    print(result)
+
+
 if __name__ == "__main__":
-    main2()
+    main3()
