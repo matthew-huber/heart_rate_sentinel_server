@@ -59,5 +59,18 @@ def return_heartrates(patient_id):
     return jsonify(heart_list)
 
 
+@app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
+def return_avg_rate(patient_id):
+    patient_id = int(patient_id)
+    for user in Patient.objects.raw({"_id": patient_id}):
+        patient = user
+
+    heartrate_list = patient.heart_rate
+    num_rates = len(heartrate_list)
+
+    avg_rate = {"rate_avg": sum(heartrate_list)/num_rates}
+    return jsonify(avg_rate)
+
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1")
