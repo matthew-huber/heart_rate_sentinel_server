@@ -4,29 +4,28 @@ import datetime
 app = Flask(__name__)
 
 
-@app.route("/api/new_patient", methods = ["POST"])
+@app.route("/api/new_patient", methods=["POST"])
 def new_patient():
     patient_data = request.get_json()
     pat_id = patient_data["patient_id"]
     email = patient_data["attending_email"]
     age = patient_data["user_age"]
-    pat_to_add = Patient(patient_id = pat_id, attending_email = email, user_age = age)
-    pat_to_add.save()
-    
+    pat_add = Patient(patient_id=pat_id, attending_email=email, user_age=age)
+    pat_add.save()
+
     return_val = {"status": "true"}
     return jsonify(return_val)
 
 
-@app.route("/api/heart_rate", methods = ["POST"])
+@app.route("/api/heart_rate", methods=["POST"])
 def heart_rate():
     heart_data = request.get_json()
     pat_id = heart_data["patient_id"]
     rate = heart_data["heart_rate"]
-    
+
     for user in Patient.objects.raw({"_id": pat_id}):
         patient = user
     print(patient)
-    #print(patient.attending_email)
     print(patient.user_age)
     try:
         existing_hr = patient.heart_rate
@@ -50,4 +49,3 @@ def heart_rate():
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1")
-
