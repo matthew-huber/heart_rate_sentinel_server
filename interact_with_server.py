@@ -14,7 +14,7 @@ def main():
 def main2():
     r = requests.post("http://127.0.0.1:5000/api/heart_rate",
                       json={"patient_id": 10,
-                            "heart_rate": 140})
+                            "heart_rate": 200})
     post_result = r.json()
     print(post_result)
 
@@ -25,5 +25,11 @@ def main3():
     print(result)
 
 
+def main4():
+    r = requests.get("http://127.0.0.1:5000/api/heart_rate/average/10")
+    result = r.json()
+    print(result)
+
+
 if __name__ == "__main__":
-    main3()
+    main4()
