@@ -47,5 +47,17 @@ def heart_rate():
     return jsonify({"status": "true"})
 
 
+@app.route("/api/heart_rate/<patient_id>", methods=["GET"])
+def return_heartrates(patient_id):
+    patient_id = int(patient_id)
+    for user in Patient.objects.raw({"_id": patient_id}):
+        patient = user
+
+    heartrate_list = patient.heart_rate
+    print(heartrate_list)
+    heart_list = {"heat_rates": heartrate_list}
+    return jsonify(heart_list)
+
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1")
