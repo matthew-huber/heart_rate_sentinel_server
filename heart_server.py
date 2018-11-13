@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from db_patient import Patient
+import heart_server_helpers
 import datetime
 app = Flask(__name__)
 
@@ -70,6 +71,18 @@ def return_avg_rate(patient_id):
 
     avg_rate = {"rate_avg": sum(heartrate_list)/num_rates}
     return jsonify(avg_rate)
+
+
+@app.route("/api/status/<patient_id>", methods=["GET"])
+def patient_status(patient_id):
+    patient_id = int(patient_id)
+    tachycardia = heart_server_helpers.is_tachycardic(patient_id)
+    
+#    if tachycardia == false:
+#        heart_server_helpers.email_alert()
+
+    status = {"patient_tachycardic": tachycardia}
+    return jsonify(status)
 
 
 if __name__ == "__main__":
