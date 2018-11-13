@@ -26,8 +26,7 @@ def heart_rate():
 
     for user in Patient.objects.raw({"_id": pat_id}):
         patient = user
-    print(patient)
-    print(patient.user_age)
+
     try:
         existing_hr = patient.heart_rate
         existing_hr.append(rate)
@@ -40,9 +39,6 @@ def heart_rate():
         print('excception handled')
         patient.heart_rate = [rate]
         patient.h_r_times = [datetime.datetime.now()]
-
-    print(patient.h_r_times)
-    print(patient.heart_rate)
 
     patient.save()
     return jsonify({"status": "true"})
