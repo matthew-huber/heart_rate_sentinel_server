@@ -36,9 +36,13 @@ def heart_rate():
         existing_hr_times.append(datetime.datetime.now())
         patient.h_r_times = existing_hr_times
     except:
-        print('excception handled')
+        print('exception handled')
         patient.heart_rate = [rate]
         patient.h_r_times = [datetime.datetime.now()]
+
+#    tachycardia = heart_server_helpers.is_tachycardic(pat_id)
+#    if tachycardia == False:
+#        heart_server_helpers.email_alert(pat_id, rate)
 
     patient.save()
     return jsonify({"status": "true"})
@@ -75,7 +79,7 @@ def patient_status(patient_id):
     tachycardia = heart_server_helpers.is_tachycardic(patient_id)
     
 #    if tachycardia == false:
-#        heart_server_helpers.email_alert()
+#        heart_server_helpers.email_alert(patient_id, patient.heart_rate)
 
     status = {"patient_tachycardic": tachycardia}
     return jsonify(status)
