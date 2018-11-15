@@ -22,6 +22,10 @@ def new_patient():
 def interval_average():
     interval_request = request.get_json()
     pat_id = interval_request["patient_id"]
+
+    if heart_server_helpers.validate_patient(pat_id) == False:
+        return jsonify({"Error": "invalid patient ID"})
+
     start_time = interval_request["heart_rate_average_since"]
 
     interval_average = heart_server_helpers.hr_avg_since(pat_id, start_time)
@@ -34,6 +38,9 @@ def heart_rate():
     heart_data = request.get_json()
     pat_id = heart_data["patient_id"]
     rate = heart_data["heart_rate"]
+
+    if heart_server_helpers.validate_patient(pat_id) == False:
+        return jsonify({"Error": "invalid patient ID"})
 
     for user in Patient.objects.raw({"_id": pat_id}):
         patient = user
@@ -61,6 +68,10 @@ def heart_rate():
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
 def return_heartrates(patient_id):
     patient_id = int(patient_id)
+
+    if heart_server_helpers.validate_patient(pat_id) == False:
+        return jsonify({"Error": "invalid patient ID"})
+
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
 
@@ -73,6 +84,10 @@ def return_heartrates(patient_id):
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
 def return_avg_rate(patient_id):
     patient_id = int(patient_id)
+
+    if heart_server_helpers.validate_patient(pat_id) == False:
+        return jsonify({"Error": "invalid patient ID"})
+
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
 
@@ -86,6 +101,10 @@ def return_avg_rate(patient_id):
 @app.route("/api/status/<patient_id>", methods=["GET"])
 def patient_status(patient_id):
     patient_id = int(patient_id)
+
+    if heart_server_helpers.validate_patient(pat_id) == False:
+        return jsonify({"Error": "invalid patient ID"})
+
     tachycardia = heart_server_helpers.is_tachycardic(patient_id)
 
     status = {"patient_tachycardic": tachycardia}
