@@ -26,7 +26,7 @@ def email_alert(patient_id):
 def is_tachycardic(patient_id):
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
- 
+
     age = patient.user_age
     heart_rate_list = patient.heart_rate
     heart_rate = heart_rate_list[-1]
@@ -66,17 +66,16 @@ def hr_avg_since(pat_id, start_time):
 
     heart_rate_list = patient.heart_rate
     hr_times_list = patient.h_r_times
-    
+
     hr_to_average = []
-    parsed_date = DateTime.Parse(start_time)
+    parse_date = datetime.datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S.%f")
 
     index = 0
 
     for date in hr_times_list:
-        if date > parsed_date:
-            hr_to_average.append(hr_times_list[i])
+        if date > parse_date:
+            hr_to_average.append(heart_rate_list[index])
         index = index + 1
 
     avg_hr = sum(hr_to_average)/len(hr_to_average)
     return avg_hr
-
