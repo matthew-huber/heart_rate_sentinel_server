@@ -10,13 +10,11 @@ def email_alert(patient_id):
 
     attendant_email = patient.attending_email
 
-    #print(attendant_email)
-
     sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email("tachycardic_alert@gmail.com")
     to_email = Email(attendant_email)
     subject = "Patient Tachycardic Alert"
-    content = Content("text/plain", "Patient {0}is tachycardic".format(patient_id))
+    content = Content("text/plain", "Patient {0}".format(patient_id))
     mail = Mail(from_email, subject, to_email, content)
     response = sg.client.mail.send.post(request_body=mail.get())
     print(response.status_code)
@@ -31,11 +29,10 @@ def is_tachycardic(patient_id):
     age = patient.user_age
     heart_rate_list = patient.heart_rate
     heart_rate = heart_rate_list[-1]
-    tachycardic = False;
-    
+    tachycardic = False
+
     if age < 1:
         return False
-        #        except 
     elif age < 3:
         if heart_rate > 151:
             tachycardic = True
@@ -55,8 +52,8 @@ def is_tachycardic(patient_id):
         if heart_rate > 100:
             tachycardic = True
 
-    if tachycardic == True:
+    if tachycardic is True:
         email_alert(patient_id)
         return True
-    
+
     return False
