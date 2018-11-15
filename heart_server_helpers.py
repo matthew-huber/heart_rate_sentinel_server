@@ -1,6 +1,13 @@
 from db_patient import Patient
 
 
+def email_alert(patient_id):
+    for user in Patient.objects.raw({"_id": patient_id})
+        patient = user
+
+    email = patient.attending_email
+
+
 def is_tachycardic(patient_id):
     for user in Patient.objects.raw({"_id": patient_id})
         patient = user
