@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from db_patient import Patient
+import heart_server_helpers
 import datetime
 app = Flask(__name__)
 
@@ -25,8 +26,7 @@ def heart_rate():
 
     for user in Patient.objects.raw({"_id": pat_id}):
         patient = user
-    print(patient)
-    print(patient.user_age)
+
     try:
         existing_hr = patient.heart_rate
         existing_hr.append(rate)
@@ -36,14 +36,14 @@ def heart_rate():
         existing_hr_times.append(datetime.datetime.now())
         patient.h_r_times = existing_hr_times
     except:
-        print('excception handled')
+        print('exception handled')
         patient.heart_rate = [rate]
         patient.h_r_times = [datetime.datetime.now()]
 
-    print(patient.h_r_times)
-    print(patient.heart_rate)
-
     patient.save()
+
+    tachycardia = heart_server_helpers.is_tachycardic(pat_id)
+
     return jsonify({"status": "true"})
 
 
@@ -70,6 +70,15 @@ def return_avg_rate(patient_id):
 
     avg_rate = {"rate_avg": sum(heartrate_list)/num_rates}
     return jsonify(avg_rate)
+
+
+@app.route("/api/status/<patient_id>", methods=["GET"])
+def patient_status(patient_id):
+    patient_id = int(patient_id)
+    tachycardia = heart_server_helpers.is_tachycardic(patient_id)
+
+    status = {"patient_tachycardic": tachycardia}
+    return jsonify(status)
 
 
 if __name__ == "__main__":
