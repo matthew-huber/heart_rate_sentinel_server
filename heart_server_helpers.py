@@ -5,10 +5,12 @@ from sendgrid.helpers.mail import *
 
 
 def email_alert(patient_id):
-    for user in Patient.objects.raw({"_id": patient_id})
+    for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
 
     attendant_email = patient.attending_email
+
+    #print(attendant_email)
 
     sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email("tachycardic_alert@gmail.com")
@@ -23,16 +25,17 @@ def email_alert(patient_id):
 
 
 def is_tachycardic(patient_id):
-    for user in Patient.objects.raw({"_id": patient_id})
+    for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
 
     age = patient.user_age
-    heart_rate = patient.herat_rate
-    
+    heart_rate_list = patient.heart_rate
+    heart_rate = heart_rate_list[-1]
     tachycardic = False;
     
     if age < 1:
-        except 
+        return False
+        #        except 
     elif age < 3:
         if heart_rate > 151:
             tachycardic = True
@@ -52,7 +55,7 @@ def is_tachycardic(patient_id):
         if heart_rate > 100:
             tachycardic = True
 
-    if tachycardic == True
+    if tachycardic == True:
         email_alert(patient_id)
         return True
     
