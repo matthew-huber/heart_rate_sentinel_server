@@ -5,6 +5,17 @@ import datetime
 from sendgrid.helpers.mail import *
 
 
+def validate_patient(patient_id):
+    for user in Patient.objects.raw({"_id": patient_id}):
+        patient = user
+
+    try:
+        patient
+        return True
+    except NameError:
+        return False
+
+
 def email_alert(patient_id):
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
