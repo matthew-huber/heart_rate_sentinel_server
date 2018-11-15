@@ -40,11 +40,10 @@ def heart_rate():
         patient.heart_rate = [rate]
         patient.h_r_times = [datetime.datetime.now()]
 
-#    tachycardia = heart_server_helpers.is_tachycardic(pat_id)
-#    if tachycardia == False:
-#        heart_server_helpers.email_alert(pat_id, rate)
-
     patient.save()
+
+    tachycardia = heart_server_helpers.is_tachycardic(pat_id)
+
     return jsonify({"status": "true"})
 
 
