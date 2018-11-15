@@ -26,7 +26,7 @@ def interval_average():
 
     interval_average = heart_server_helpers.hr_avg_since(pat_id, start_time)
 
-    return jsonify("interval_average": interval_average)
+    return jsonify({"interval_average": interval_average})
 
 
 @app.route("/api/heart_rate", methods=["POST"])
