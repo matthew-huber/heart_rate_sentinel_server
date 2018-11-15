@@ -23,7 +23,7 @@ def interval_average():
     interval_request = request.get_json()
     pat_id = interval_request["patient_id"]
 
-    if heart_server_helpers.validate_patient(pat_id) == False:
+    if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
 
     start_time = interval_request["heart_rate_average_since"]
@@ -39,7 +39,7 @@ def heart_rate():
     pat_id = heart_data["patient_id"]
     rate = heart_data["heart_rate"]
 
-    if heart_server_helpers.validate_patient(pat_id) == False:
+    if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
 
     for user in Patient.objects.raw({"_id": pat_id}):
@@ -69,7 +69,7 @@ def heart_rate():
 def return_heartrates(patient_id):
     patient_id = int(patient_id)
 
-    if heart_server_helpers.validate_patient(pat_id) == False:
+    if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
 
     for user in Patient.objects.raw({"_id": patient_id}):
@@ -85,7 +85,7 @@ def return_heartrates(patient_id):
 def return_avg_rate(patient_id):
     patient_id = int(patient_id)
 
-    if heart_server_helpers.validate_patient(pat_id) == False:
+    if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
 
     for user in Patient.objects.raw({"_id": patient_id}):
@@ -102,7 +102,7 @@ def return_avg_rate(patient_id):
 def patient_status(patient_id):
     patient_id = int(patient_id)
 
-    if heart_server_helpers.validate_patient(pat_id) == False:
+    if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
 
     tachycardia = heart_server_helpers.is_tachycardic(patient_id)
