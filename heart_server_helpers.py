@@ -1,11 +1,25 @@
 from db_patient import Patient
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
 
 
 def email_alert(patient_id):
     for user in Patient.objects.raw({"_id": patient_id})
         patient = user
 
-    email = patient.attending_email
+    attendant_email = patient.attending_email
+
+    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+    from_email = Email("tachycardic_alert@gmail.com")
+    to_email = Email(attendant_email)
+    subject = "Patient Tachycardic Alert"
+    content = Content("text/plain", "Patient {0}is tachycardic".format(patient_id))
+    mail = Mail(from_email, subject, to_email, content)
+    response = sg.client.mail.send.post(request_body=mail.get())
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
 
 
 def is_tachycardic(patient_id):
