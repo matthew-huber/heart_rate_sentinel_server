@@ -1,6 +1,7 @@
 from db_patient import Patient
 import sendgrid
 import os
+import datetime
 from sendgrid.helpers.mail import *
 
 
@@ -25,7 +26,7 @@ def email_alert(patient_id):
 def is_tachycardic(patient_id):
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
-
+ 
     age = patient.user_age
     heart_rate_list = patient.heart_rate
     heart_rate = heart_rate_list[-1]
@@ -57,3 +58,25 @@ def is_tachycardic(patient_id):
         return True
 
     return False
+
+
+def hr_avg_since(pat_id, start_time):
+    for user in Patient.objects.raw({"_id": pat_id}):
+        patient = user
+
+    heart_rate_list = patient.heart_rate
+    hr_times_list = patient.h_r_times
+    
+    hr_to_average = []
+    parsed_date = DateTime.Parse(start_time)
+
+    index = 0
+
+    for date in hr_times_list:
+        if date > parsed_date:
+            hr_to_average.append(hr_times_list[i])
+        index = index + 1
+
+    avg_hr = sum(hr_to_average)/len(hr_to_average)
+    return avg_hr
+
