@@ -28,25 +28,32 @@ def is_tachycardic(patient_id):
 
     age = patient.user_age
     heart_rate = patient.herat_rate
+    
+    tachycardic = False;
+    
     if age < 1:
         except 
     elif age < 3:
         if heart_rate > 151:
-            return True
+            tachycardic = True
     elif age < 5:
         if heart_rate > 137:
-            return True
+            tachycardic = True
     elif age < 8:
         if heart_rate > 133:
-            return True
+            tachycardic = True
     elif age < 12:
         if heart_rate > 130:
-            return True
+            tachycardic = True
     elif age < 15:
         if heart_rate > 119:
-            return True
+            tachycardic = True
     else:
         if heart_rate > 100:
-            return True
+            tachycardic = True
+
+    if tachycardic == True
+        email_alert(patient_id)
+        return True
     
     return False
