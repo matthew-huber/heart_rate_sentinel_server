@@ -43,6 +43,11 @@ def interval_average():
 
     start_time = interval_request["heart_rate_average_since"]
 
+    try:
+        datetime.datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S.%f")
+    except ValueError:
+        return jsonify({"Error": "Enter date a YYYY-mm-dd HH:MM:SS.ffffff"})
+
     interval_average = heart_server_helpers.hr_avg_since(pat_id, start_time)
 
     return jsonify({"interval_average": interval_average})
