@@ -1,4 +1,4 @@
-from heart_server_helpers import hr_avg_since 
+from heart_server_helpers import hr_avg_since
 import pytest
 
 
