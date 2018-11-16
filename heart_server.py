@@ -26,6 +26,9 @@ def interval_average():
     if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
 
+    if heart_server_helpers.exisiting_beats(pat_id) is False:
+        return jsonify({"Error": "no heartbeats recorded for patient"})
+
     start_time = interval_request["heart_rate_average_since"]
 
     interval_average = heart_server_helpers.hr_avg_since(pat_id, start_time)
@@ -72,6 +75,9 @@ def return_heartrates(patient_id):
     if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
 
+    if heart_server_helpers.existing_beats(pat_id) is False:
+        return jsonify({"Error": "no heartbeats recorded for patient"})
+
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
 
@@ -87,6 +93,9 @@ def return_avg_rate(patient_id):
 
     if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
+
+    if heart_server_helpers.existing_beats(pat_id) is False:
+        return jsonify({"Error": "no heartbeats recorded for patient"})
 
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
@@ -104,6 +113,9 @@ def patient_status(patient_id):
 
     if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
+
+    if heart_server_helpers.existing_beats(pat_id) is False:
+        return jsonify({"Error": "no heartbeats recorded for patient"})
 
     tachycardia = heart_server_helpers.is_tachycardic(patient_id)
 
