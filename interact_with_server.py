@@ -45,8 +45,7 @@ def get_avg_hr():
 
     :return: None
     """
-    r = requests.get("http://vcm-7302.vm.duke.edu:5000/
-		     api/heart_rate/average/10")
+    r = requests.get("http://vcm-7302.vm.duke.edu:5000/api/heart_rate/average/1")
     result = r.json()
     print(result)
 
@@ -57,8 +56,7 @@ def get_avg_hr_since():
 
     :return: None
     """
-    r = requests.post("http://vmc-7302.vm.duke.edu:5000/
-		      api/heart_rate/interval_average",
+    r = requests.post("http://vmc-7302.vm.duke.edu:5000/api/heart_rate/interval_average",
                       json={"patient_id": 8,
                             "heart_rate_average_since":
                             "2018-03-09 11:00:36.372339"})
