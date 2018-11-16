@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from db_patient import Patient
 import heart_server_helpers
 import datetime
+from email.utils import parseaddr
 app = Flask(__name__)
 
 
@@ -11,6 +12,17 @@ def new_patient():
     pat_id = patient_data["patient_id"]
     email = patient_data["attending_email"]
     age = patient_data["user_age"]
+
+    if not isinstance(pat_id, int):
+        return jsonify({"Error": "non-integer entered for patient ID"})
+    if not isinstance(age, int):
+        return jsonify({"Error": "non-integer entered for age"})
+    if age < 1:
+        return jsonify({"Error": "age can not be less than 1"})
+    valid_email = '@' in parseaddr(email)[1]
+    if not valid_email:
+        return jsonify({"Error": "invalid email address entered"})
+
     pat_add = Patient(patient_id=pat_id, attending_email=email, user_age=age)
     pat_add.save()
 
