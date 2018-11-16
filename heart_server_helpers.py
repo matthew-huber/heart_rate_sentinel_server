@@ -59,9 +59,7 @@ def email_alert(patient_id):
     content = Content("text/plain", "Patient {0}".format(patient_id))
     mail = Mail(from_email, subject, to_email, content)
     response = sg.client.mail.send.post(request_body=mail.get())
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
+    return True
 
 
 def is_tachycardic(patient_id):
