@@ -54,6 +54,9 @@ def heart_rate():
     pat_id = heart_data["patient_id"]
     rate = heart_data["heart_rate"]
 
+    if not isinstance(rate, int):
+        return jsonify({"Error": "non-integer value for heart rate"})
+
     if heart_server_helpers.validate_patient(pat_id) is False:
         return jsonify({"Error": "invalid patient ID"})
 
