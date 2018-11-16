@@ -6,6 +6,12 @@ from sendgrid.helpers.mail import *
 
 
 def existing_beats(patient_id):
+    """
+    checks whether there are existing heart beats for a patient
+
+    :param patient_id: integer ID of patient to check if there is beat data
+    :return: True if patient has recorded heart rates, False if not
+    """
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
 
@@ -18,6 +24,12 @@ def existing_beats(patient_id):
 
 
 def validate_patient(patient_id):
+    """
+    check whether patient exists in database
+
+    :param patient_id: integer ID to look for in database
+    :return: True if patient exists in database, False if not
+    """
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
 
@@ -29,6 +41,12 @@ def validate_patient(patient_id):
 
 
 def email_alert(patient_id):
+    """
+    Send an email to the attending physician of tachycardic patient
+
+    :param patient_id: integer ID of tachycardic patient
+    :return: None
+    """
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
 
@@ -47,6 +65,12 @@ def email_alert(patient_id):
 
 
 def is_tachycardic(patient_id):
+    """
+    check whether a patient is tachycardic
+
+    :param patient_id: integer ID of patient to check tachycardia status
+    :return: True if patient is tachycardic, False if patient is not
+    """
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
 
@@ -84,6 +108,13 @@ def is_tachycardic(patient_id):
 
 
 def hr_avg_since(pat_id, start_time):
+    """
+    find the heart rate for a given patient since a certain time
+
+    :param pat_id: integer ID of patient to find average heart rate of
+    :param start_time: date time string to find heart rate since
+    :return: average heart rate since time given by datetime string
+    """
     for user in Patient.objects.raw({"_id": pat_id}):
         patient = user
 
@@ -100,5 +131,7 @@ def hr_avg_since(pat_id, start_time):
             hr_to_average.append(heart_rate_list[index])
         index = index + 1
 
+    if len(hr_to_average) == 0:
+        return 0
     avg_hr = sum(hr_to_average)/len(hr_to_average)
     return avg_hr
