@@ -8,6 +8,11 @@ app = Flask(__name__)
 
 @app.route("/api/new_patient", methods=["POST"])
 def new_patient():
+    """
+    add a new patient to the patient database via post
+
+    :return: json indicating success adding patient, or error message
+    """
     patient_data = request.get_json()
     pat_id = patient_data["patient_id"]
     email = patient_data["attending_email"]
@@ -32,6 +37,11 @@ def new_patient():
 
 @app.route("/api/heart_rate/interval_average", methods=["POST"])
 def interval_average():
+    """
+    calculate the average heartrate since a given time via post
+
+    :return: json containing the average, or error message
+    """
     interval_request = request.get_json()
     pat_id = interval_request["patient_id"]
 
@@ -55,6 +65,11 @@ def interval_average():
 
 @app.route("/api/heart_rate", methods=["POST"])
 def heart_rate():
+    """
+    Add a heart rate to the database for a given patient via post
+
+    :return: json indicating success adding heart rate, or error message
+    """
     heart_data = request.get_json()
     pat_id = heart_data["patient_id"]
     rate = heart_data["heart_rate"]
@@ -90,6 +105,12 @@ def heart_rate():
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
 def return_heartrates(patient_id):
+    """
+    access database to get heart rate history for a patient
+
+    :param patient_id: integer ID of patient to get heart rates of
+    :return: json with the heart rate list for patient, or error message
+    """
     patient_id = int(patient_id)
 
     if heart_server_helpers.validate_patient(pat_id) is False:
@@ -109,6 +130,13 @@ def return_heartrates(patient_id):
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
 def return_avg_rate(patient_id):
+    """
+    access database to get last heart rate recorded for patient
+
+    :param patient_id: integer ID of patient to get heart rates from
+    :return: json with the last heart rate for patient, or error message
+
+    """
     patient_id = int(patient_id)
 
     if heart_server_helpers.validate_patient(pat_id) is False:
@@ -129,6 +157,12 @@ def return_avg_rate(patient_id):
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
 def patient_status(patient_id):
+    """
+    check whether a given patient is tachycardic
+
+    :param patient_id: integer ID of patient to check tachycardic status
+    :return: json indicating whether patient is tachycardic, or error message
+    """
     patient_id = int(patient_id)
 
     if heart_server_helpers.validate_patient(pat_id) is False:
