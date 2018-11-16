@@ -100,6 +100,9 @@ def heart_rate():
 
     tachycardia = heart_server_helpers.is_tachycardic(pat_id)
 
+    if tachycardia is True:
+        heart_server_helpers.email_alert(pat_id)
+
     return jsonify({"status": "true"})
 
 
@@ -172,6 +175,9 @@ def patient_status(patient_id):
         return jsonify({"Error": "no heartbeats recorded for patient"})
 
     tachycardia = heart_server_helpers.is_tachycardic(patient_id)
+
+    if tachycaria is True:
+        heart_server_helpers.email_alert(patient_id)
 
     status = {"patient_tachycardic": tachycardia}
     return jsonify(status)

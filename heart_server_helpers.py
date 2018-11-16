@@ -99,7 +99,6 @@ def is_tachycardic(patient_id):
             tachycardic = True
 
     if tachycardic is True:
-        email_alert(patient_id)
         return True
 
     return False
