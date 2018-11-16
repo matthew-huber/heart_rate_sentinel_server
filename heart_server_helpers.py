@@ -5,6 +5,18 @@ import datetime
 from sendgrid.helpers.mail import *
 
 
+def existing_beats(patient_id):
+    for user in Patient.objects.raw({"_id": patient_id}):
+        patient = user
+
+    hr_list = patient.heart_rate
+
+    if hr_list == []:
+        return False
+    else:
+        return True
+
+
 def validate_patient(patient_id):
     for user in Patient.objects.raw({"_id": patient_id}):
         patient = user
